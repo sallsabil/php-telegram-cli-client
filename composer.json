@@ -1,24 +1,30 @@
 {
-    "name": "zyberspace/telegram-cli-client",
+    "name": "vitormattos/telegram-cli-client",
     "description": "php-client for telegram-cli",
     "type": "library",
-    "homepage": "https://github.com/zyberspace/php-telegram-cli-client",
+    "homepage": "https://github.com/vitormattos/php-telegram-cli-client",
     "license": "MPL-2.0",
     "authors": [
         {
-            "name": "zyberspace",
-            "email": "zyberspace@zyberware.org"
+            "name": "Vitor Mattos",
+            "email": "vitor.mattos@phprio.org"
         }
     ],
     "require": {
-        "php": ">=5.3.0,<6.0.0"
+        "php": ">=5.3.0"
     },
     "require-dev": {
         "zyberspace/discovery-shell": "dev-master"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/vitormattos/php-discovery-shell"
+        }
+    ],
     "autoload": {
         "psr-0": {
-            "Zyberspace\\Telegram\\Cli\\": "lib/"
+            "vitormattos\\Telegram\\Cli\\": "lib/"
         }
     }
 }

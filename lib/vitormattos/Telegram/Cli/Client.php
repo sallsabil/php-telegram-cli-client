@@ -109,6 +109,21 @@ class Client extends RawClient
     }
 
     /**
+     * Generate a link for invite
+     *
+     * @param string $chat The chat you want generate link. Gets escaped with escapePeer().
+     *
+     * @return object|boolean An object with link; false otherwise
+     *
+     * @uses exec()
+     * @uses escapePeer()
+     */
+    public function exportChatLink($chat)
+    {
+        return $this->exec('export_chat_link ' . $this->escapePeer($chat));
+    }
+
+    /**
      * Returns an info-object about a chat (title, name, members, admin, etc.).
      *
      * @param string $chat The name of the chat (not the title). Gets escaped with escapePeer().
@@ -327,14 +342,23 @@ class Client extends RawClient
     /**
      * Returns an array of all your dialogs. Every dialog is an object with type "user" or "chat".
      *
+     * @param string user|chat
      * @return array|boolean An array with your dialogs; false if somethings goes wrong
      *
      * @uses exec()
      *
      * @see getUserInfo()
      */
-    public function getDialogList()
+    public function getDialogList($type = null)
     {
+        $return = parent::getDialogList();
+        if($type) {
+            foreach($return as $key => $row) {
+                if($row->peer_type != $type) {
+                    unset($return[$key]);
+                }
+            }
+        }
         return $this->exec('dialog_list');
     }
 
@@ -409,5 +433,31 @@ class Client extends RawClient
         $formattedPath = $this->formatFileName($path);
 
         return $this->exec('send_file ' . $peer . ' ' . $formattedPath);
+    }
+
+
+    /**
+     * Get our user info
+     *
+     * @return object|boolean An object with informations about the user; false if somethings goes wrong
+     */
+    public function getSelf()
+    {
+        return $this->exec('get_self');
+    }
+
+    public function globalSearch($q, $local = '*')
+    {
+        return $this->exec('search '.$this->escapePeer($local).' ' . $this->escapeStringArgument($q));
+    }
+    
+    /**
+     * Delete a message
+     * 
+     * @param string $message_id
+     */
+    public function deleteMsg($message_id)
+    {
+        return $this->exec('delete_msg '.$message_id);
     }
 }
