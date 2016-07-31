@@ -351,7 +351,7 @@ class Client extends RawClient
      */
     public function getDialogList($type = null)
     {
-        $return = parent::getDialogList();
+        $return = $this->exec('dialog_list');
         if($type) {
             foreach($return as $key => $row) {
                 if($row->peer_type != $type) {
@@ -359,7 +359,7 @@ class Client extends RawClient
                 }
             }
         }
-        return $this->exec('dialog_list');
+        return $return;
     }
 
     /**
