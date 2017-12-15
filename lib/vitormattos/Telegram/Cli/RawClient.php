@@ -6,7 +6,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-namespace vitormattos\Telegram\Cli;
+namespace sallsabil\Telegram\Cli;
 
 /**
  * Raw part of the php-client for telegram-cli.
@@ -66,12 +66,16 @@ class RawClient
      *
      * @return object|boolean Returns the answer as a json-object or true on success, false if there was an error.
      */
-    public function exec($command)
+     public function exec($command, $if_up = false)
     {
-        $command = implode(' ', func_get_args());
+		$commands = func_get_args();
+		unset($commands[1]);
+        $command = implode(' ', $commands);
+
 
         fwrite($this->_fp, str_replace("\n", '\n', $command) . PHP_EOL);
-
+		
+		if($if_up === false) {
         $answer = fgets($this->_fp); //"ANSWER $bytes" or false if an error occurred
         if (is_string($answer)) {
             if (substr($answer, 0, 7) === 'ANSWER ') {
@@ -82,12 +86,21 @@ class RawClient
 
                     //Run fread() till we have all the bytes we want
                     //(as fread() can only read a maximum of 8192 bytes from a read-buffered stream at once)
-                    do {
+                    
+					do {
                         $jsonString .= fread($this->_fp, $bytes - $bytesRead);
                         $bytesRead = strlen($jsonString);
                     } while ($bytesRead < $bytes);
+	
 
-                    $json = json_decode($jsonString);
+                    // json and string
+                    if($this->isJson($jsonString)){
+					$json = json_decode($jsonString);
+					}
+					elseif(is_string($jsonString)) {
+					$json = $jsonString;
+					}
+
 
                     if (!isset($json->error)) {
                         //Reset error-message and error-code
@@ -108,10 +121,20 @@ class RawClient
                 }
             }
         }
+		}
+		else {
+		return print_r(func_get_args(), true);
+		}
+
 
         return false;
     }
-
+    
+    //json_decode function
+    function isJson($string) {
+     json_decode($string);
+     return (json_last_error() == JSON_ERROR_NONE);
+    }
     /**
      * Returns the error-message retrieved vom telegram-cli, if there is one.
      *
