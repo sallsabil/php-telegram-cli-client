@@ -1,8 +1,8 @@
 {
-    "name": "vitormattos/telegram-cli-client",
+    "name": "sallsabil/telegram-cli-client",
     "description": "php-client for telegram-cli",
     "type": "library",
-    "homepage": "https://github.com/vitormattos/php-telegram-cli-client",
+    "homepage": "https://github.com/sallsabil/php-telegram-cli-client",
     "license": "MPL-2.0",
     "authors": [
         {
@@ -14,17 +14,17 @@
         "php": ">=5.3.0"
     },
     "require-dev": {
-        "zyberspace/discovery-shell": "dev-master"
+        "sallsabil/discovery-shell": "dev-master"
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/vitormattos/php-discovery-shell"
+            "url": "https://github.com/sallsabil/php-discovery-shell"
         }
     ],
     "autoload": {
         "psr-0": {
-            "vitormattos\\Telegram\\Cli\\": "lib/"
+            "sallsabil\\Telegram\\Cli\\": "lib/"
         }
     }
 }
