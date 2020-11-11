@@ -26,5 +26,7 @@
         "psr-0": {
             "sallsabil\\Telegram\\Cli\\": "lib/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
