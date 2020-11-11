@@ -19,7 +19,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/zyberspace/php-discovery-shell"
+            "url": "https://github.com/sallsabil/php-discovery-shell"
         }
     ],
     "autoload": {
